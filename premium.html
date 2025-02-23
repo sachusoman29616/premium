@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Details Lookup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        button {
+            width: 84%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #output {
+            background: white;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Agent Details Lookup</h2>
+    <input type="text" id="agentCode" placeholder="Enter Agent Code (e.g., AGN1024739)">
+    <button onclick="fetchAgentDetails()">Get Details</button>
+    
+    <div id="output"></div>
+
+    <script>
+        function fetchAgentDetails() {
+            let agentCode = document.getElementById("agentCode").value.trim();
+            if (!agentCode) {
+                document.getElementById("output").innerHTML = "<p style='color:red;'>Please enter an Agent Code.</p>";
+                return;
+            }
+
+            let apiUrl = "https://script.google.com/macros/s/AKfycbzC0GHJKoe5ryrkp4q0KtCrhK0ucF-iOMRsBavQqj45s7Xkk1zqXimYjOM3BRXRFw04hQ/exec?agentCode=" + encodeURIComponent(agentCode);
+            
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById("output").innerHTML = "<p style='color:red;'>" + data.error + "</p>";
+                    } else {
+                        document.getElementById("output").innerHTML = `
+                            <h3>Agent Details</h3>
+                            <table>
+                                <tr><th>Field</th><th>Value</th></tr>
+                                <tr><td>Agent Code</td><td>${data.agentCode}</td></tr>
+                                <tr><td>Agent Name</td><td>${data.agentName}</td></tr>
+                                <tr><td>Premium 24-25</td><td>${data.premium24_25}</td></tr>
+                                <tr><td>Premium 23-24</td><td>${data.premium23_24}</td></tr>
+                                <tr><td>Accretion</td><td>${data.accretion}</td></tr>
+                                <tr><td>Motor Premium 24-25</td><td>${data.motorPremium24_25}</td></tr>
+                                <tr><td>Motor Premium 23-24</td><td>${data.motorPremium23_24}</td></tr>
+                                <tr><td>Motor Accretion</td><td>${data.motorAccretion}</td></tr>
+                                <tr><td>Motor Growth</td><td>${data.motorGrowth}</td></tr>
+                                <tr><td>Motor Policy Count</td><td>${data.policyCount}</td></tr>
+                                <tr><td>Target Incentive</td><td>${data.targetIncentive}</td></tr>
+                                <tr><td>Message</td><td>${data.message}</td></tr>
+                            </table>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById("output").innerHTML = "<p style='color:red;'>Error fetching data. Please try again.</p>";
+                });
+        }
+    </script>
+
+</body>
+</html>
