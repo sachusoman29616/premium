@@ -85,7 +85,7 @@
 
             document.getElementById("loading").style.display = "block";
 
-            let apiUrl = "https://script.google.com/macros/s/AKfycbwUUe8QxAdPi0c5fA7muB9cD8vHp27H-njFnPquNNsuzkXPlVbBb7EMvq5Xb5f9vvO6/exec?agentCode=" + encodeURIComponent(agentCode);
+            let apiUrl = "https://script.google.com/macros/s/AKfycby_0DqCkCu1iLCDNorbHMv1qWMzArXTO-RnjRapaQEpY1S8BydQCBJJ9dahR3z7ZY0UDA/exec?agentCode=" + encodeURIComponent(agentCode);
             
             fetch(apiUrl)
                 .then(response => response.json())
@@ -95,6 +95,8 @@
                     } else {
                         document.getElementById("output").innerHTML = `
                             <h3>Agent Details</h3>
+                            <p><strong>Month & Year:</strong> ${data.monthYear}</p>
+                            <p><strong>As On:</strong> ${data.asOnDate}</p>
                             <table>
                                 <tr><th>Field</th><th>Value</th></tr>
                                 <tr><td>Agent Code</td><td>${data.agentCode}</td></tr>
