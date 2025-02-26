@@ -34,6 +34,13 @@
         button:hover {
             background-color: #0056b3;
         }
+        #loading {
+          display: none;
+          font-size: 18px;
+          font-weight: bold;
+          color: blue;   
+          margin-top: 10px;
+        }
         #output {
             background: white;
             padding: 15px;
@@ -65,7 +72,7 @@
     <h2>Agent Details Lookup</h2>
     <input type="text" id="agentCode" placeholder="Enter Agent Code (e.g., AGN1024739)">
     <button onclick="fetchAgentDetails()">Get Details</button>
-    
+    <p id="loading">Loading...We appreciate your patience</p>
     <div id="output"></div>
 
     <script>
@@ -76,7 +83,9 @@
                 return;
             }
 
-            let apiUrl = "https://script.google.com/macros/s/AKfycbzC0GHJKoe5ryrkp4q0KtCrhK0ucF-iOMRsBavQqj45s7Xkk1zqXimYjOM3BRXRFw04hQ/exec?agentCode=" + encodeURIComponent(agentCode);
+            document.getElementById("loading").style.display = "block";
+
+            let apiUrl = "https://script.google.com/macros/s/AKfycbzmqXgS4E8xY3oH5yP0OzvQ06LI4m_LnhWUfn5SX1tr-lP-yoqm_9juMBHklJpqN00Rdg/exec?agentCode=" + encodeURIComponent(agentCode);
             
             fetch(apiUrl)
                 .then(response => response.json())
@@ -102,10 +111,13 @@
                                 <tr><td>Message</td><td>${data.message}</td></tr>
                             </table>
                         `;
+
+                        document.getElementById("loading").style.display = "none";
                     }
                 })
                 .catch(error => {
                     document.getElementById("output").innerHTML = "<p style='color:red;'>Error fetching data. Please try again.</p>";
+                    document.getElementById("loading").style.display = "none";
                 });
         }
     </script>
