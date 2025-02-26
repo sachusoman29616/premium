@@ -77,7 +77,7 @@
 
     <script>
         function fetchAgentDetails() {
-            let agentCode = document.getElementById("agentCode").value.trim();
+            let agentCode = document.getElementById("agentCode").value.trim().toUpperCase();
             if (!agentCode) {
                 document.getElementById("output").innerHTML = "<p style='color:red;'>Please enter an Agent Code.</p>";
                 return;
@@ -85,7 +85,7 @@
 
             document.getElementById("loading").style.display = "block";
 
-            let apiUrl = "https://script.google.com/macros/s/AKfycbzmqXgS4E8xY3oH5yP0OzvQ06LI4m_LnhWUfn5SX1tr-lP-yoqm_9juMBHklJpqN00Rdg/exec?agentCode=" + encodeURIComponent(agentCode);
+            let apiUrl = "https://script.google.com/macros/s/AKfycbwUUe8QxAdPi0c5fA7muB9cD8vHp27H-njFnPquNNsuzkXPlVbBb7EMvq5Xb5f9vvO6/exec?agentCode=" + encodeURIComponent(agentCode);
             
             fetch(apiUrl)
                 .then(response => response.json())
